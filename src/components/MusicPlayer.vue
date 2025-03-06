@@ -29,7 +29,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 
-const baseURL = 'http://alist.avider.top/d/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AD%98%E5%82%A8/Cache/';
+const baseURL = 'http://avider.fun:5244/d/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AD%98%E5%82%A8/Cache/';
 const audio = ref(new Audio());
 const currentIndex = ref(0);
 const isPlaying = ref(false);

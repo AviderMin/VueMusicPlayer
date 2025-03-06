@@ -5,15 +5,3 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
 })
-
-module.exports = {
-  devServer: {
-    proxy: {
-      '/api': {
-        target: 'http://alist.avider.top',
-        changeOrigin: true,
-        pathRewrite: { '^/api': '' },
-      },
-    },
-  },
-};
