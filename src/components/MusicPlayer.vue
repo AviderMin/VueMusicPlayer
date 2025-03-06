@@ -134,12 +134,14 @@ function prevSong() {
   currentIndex.value = (currentIndex.value - 1 + songs.value.length) % songs.value.length;
   loadSong();
   audio.value.play();
+  isPlaying.value = true;
 }
 
 function nextSong() {
   currentIndex.value = (currentIndex.value + 1) % songs.value.length;
   loadSong();
   audio.value.play();
+  isPlaying.value = true;
 }
 
 function seek() {
@@ -166,21 +168,7 @@ watch(currentIndex, loadLyrics);
 </script>
 
 <style scoped>
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow: hidden;
-  /* 禁止页面滚动 */
-  position: relative;
-  background-color: black;
-}
+
 
 #background {
   position: absolute;
@@ -194,7 +182,8 @@ body {
   transition: background-image 1s ease-in-out, filter 1s ease-in-out;
   filter: blur(200px);
   /* 应用模糊效果 */
-  backdrop-filter: blur(200px);
+  
+  
   /* 毛玻璃效果 */
 }
 
@@ -204,6 +193,7 @@ body {
   align-items: flex-start;
   width: 100%;
   max-width: 1200px;
+  margin: auto; 
 }
 
 #player-container {
@@ -248,6 +238,8 @@ body {
 #progress-container input[type="range"] {
   appearance: none;
   background-color: #fff !important;
+  width: 70%;
+  border-radius: 10px;
 }
 
 #progress-container input[type="range"]::-webkit-slider-thumb {
@@ -298,7 +290,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   font-size: 32px;
   color: #fff;
   text-align: left;
-  margin: 0 0 0 50px;
+  margin: auto;
   scroll-behavior: smooth;
   cursor: pointer;
 }
