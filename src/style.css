@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* 禁止页面滚动 */
+    position: relative;
+    background-color:black;
+  }
