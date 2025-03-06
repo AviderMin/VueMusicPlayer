@@ -1,22 +1,24 @@
 <template>
   <div id="background" :style="{ backgroundImage: `url(${currentSong.cover})` }"></div>
-  <div id="player-container">
-    <div id="cover">
-      <img :src="currentSong.cover" alt="Album Cover" />
-    </div>
-    <div id="song-info">
-      <h2>{{ currentSong.title }}</h2>
-      <p>{{ currentSong.artist }}</p>
-    </div>
-    <div id="progress-container">
-      <span>{{ currentTime }}</span>
-      <input type="range" v-model="progress" @input="seek" />
-      <span>{{ duration }}</span>
-    </div>
-    <div id="controls">
-      <button @click="prevSong">⏮</button>
-      <button @click="togglePlay">{{ isPlaying ? '⏸' : '▶' }}</button>
-      <button @click="nextSong">⏭</button>
+  <div id="main-container">
+    <div id="player-container">
+      <div id="cover">
+        <img :src="currentSong.cover" alt="Album Cover" />
+      </div>
+      <div id="song-info">
+        <h2>{{ currentSong.title }}</h2>
+        <p>{{ currentSong.artist }}</p>
+      </div>
+      <div id="progress-container">
+        <span>{{ currentTime }}</span>
+        <input type="range" v-model="progress" @input="seek" />
+        <span>{{ duration }}</span>
+      </div>
+      <div id="controls">
+        <button @click="prevSong">⏮</button>
+        <button @click="togglePlay">{{ isPlaying ? '⏸' : '▶' }}</button>
+        <button @click="nextSong">⏭</button>
+      </div>
     </div>
     <ul id="lyrics-container" @click="toggleLyrics">
       <li v-for="(line, index) in lyrics" :key="index" :class="{ active: index === currentLyricIndex }">
@@ -64,15 +66,18 @@ async function loadSongs() {
 
 async function loadLyrics() {
   try {
-    const response = await fetch(`/api${currentSong.value.lyricsSrc}`);
+    const lyricsURL = getFullURL(currentSong.value.lyricsSrc);
+    console.log('加载歌词 URL:', lyricsURL); // 调试信息
+    const response = await fetch(lyricsURL);
     const text = await response.text();
+    console.log('歌词内容:', text); // 调试信息
     lyrics.value = parseLyrics(text);
+    console.log('解析后的歌词:', lyrics.value); // 调试信息
   } catch (error) {
     console.error('加载歌词失败:', error);
     lyrics.value = [];
   }
 }
-
 function parseLyrics(text) {
   const lines = text.split('\n');
   const regex = /\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)/;
@@ -86,9 +91,8 @@ function parseLyrics(text) {
       return { time, text: match[4].trim() };
     }
     return null;
-  }).filter(line => line !== null);
+  }).filter(line => line !== null && line.text !== '');
 }
-
 function updateLyrics(currentTime) {
   if (!lyrics.value.length) return;
   let index = lyrics.value.findIndex(line => line.time > currentTime);
@@ -188,10 +192,18 @@ body {
   background-position: center;
   z-index: -1;
   transition: background-image 1s ease-in-out, filter 1s ease-in-out;
-  filter: blur(10px);
+  filter: blur(200px);
   /* 应用模糊效果 */
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(200px);
   /* 毛玻璃效果 */
+}
+
+#main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
 }
 
 #player-container {
@@ -324,6 +336,11 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 @media (max-width: 600px) {
+  #main-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
   #player-container {
     width: 100%;
     padding: 20px;
@@ -349,6 +366,8 @@ input[type="range"]::-webkit-slider-runnable-track {
   #lyrics-container {
     max-height: 300px;
     font-size: 1rem;
+    width: 100%;
+    margin: 20px 0 0 0;
   }
 }
 </style>
