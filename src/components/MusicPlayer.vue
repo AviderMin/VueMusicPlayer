@@ -240,6 +240,7 @@ watch(currentIndex, loadLyrics);
   background-color: #fff !important;
   width: 70%;
   border-radius: 10px;
+                       
 }
 
 #progress-container input[type="range"]::-webkit-slider-thumb {
@@ -275,6 +276,8 @@ input[type="range"]::-webkit-slider-runnable-track {
   margin: 0 15px;
   padding: 10px;
   transition: transform 0.2s ease;
+  width: 10%; 
+  text-align: center; 
 }
 
 #controls button:hover {
@@ -283,8 +286,8 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 #lyrics-container {
   list-style: none;
-  padding: 0 0 0 20px;
-  max-height: 520px;
+  padding: 0 0 0 25px;
+  max-height: 460px;
   width: 580px;
   overflow-y: auto;
   font-size: 32px;
