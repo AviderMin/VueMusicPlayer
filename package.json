@@ -5,14 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build && electron-builder",
+    "preview": "vite preview",
+    "build:win": "vite build && electron-builder --win",
+    "build:mac": "vite build && electron-builder --mac"
   },
   "dependencies": {
     "vue": "^3.5.13"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
+    "electron": "^35.0.0",
+    "electron-builder": "^25.1.8",
     "vite": "^6.2.0"
   }
 }
